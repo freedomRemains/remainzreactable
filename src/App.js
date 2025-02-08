@@ -6,13 +6,14 @@ import Top from './pages/Top';
 import ButtonSample from './pages/ButtonSample';
 import AfterLogin from './pages/AfterLogin';
 import VariableList from './pages/VariableList';
+import TicTacToe from './pages/TicTacToe';
+import BootstrapSample from './pages/BootstrapSample';
 
 function App() {
   return (
     <>
       <div>
-        <h3><a href="https://ja.react.dev/learn">クイックスタート</a> まで完了。<br />
-        次回は <a href="https://ja.react.dev/learn/tutorial-tic-tac-toe">チュートリアル：三目並べ</a> から
+        <h3><a href="https://ja.react.dev/learn">クイックスタート</a> を完了。<br />
         </h3>
       </div>
 
@@ -24,6 +25,8 @@ function App() {
             <li><Link to="/buttonSample">ButtonSample</Link></li>
             <li><Link to="/afterLogin">AfterLogin</Link></li>
             <li><Link to="/variableList">VariableList</Link></li>
+            <li><Link to="/ticTacToe">TicTacToe</Link></li>
+            <li><Link to="/bootstrapSample">BootstrapSample</Link></li>
           </ul>
         </nav>
         <Routes>
@@ -32,6 +35,8 @@ function App() {
           <Route path="/buttonSample" element={<ButtonSample />} />
           <Route path="/afterLogin" element={<AfterLogin />} />
           <Route path="/variableList" element={<VariableList />} />
+          <Route path="/ticTacToe" element={<TicTacToe />} />
+          <Route path="/bootstrapSample" element={<BootstrapSample />} />
         </Routes>
       </Router>
 
