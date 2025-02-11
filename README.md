@@ -1,3 +1,55 @@
+### シリコンバレーの「25%時間」原則とは
+---
+「25%時間」原則は、従業員が自身の通常の業務時間のうち25%を使って、創造的なプロジェクトや新しいアイデアに取り組むことを奨励するものです。特に有名なのが、Googleがこの原則を採用していることで、GmailやAdSenseなどの人気製品もこの制度から生まれました。
+
+これにより、社員は自分の興味や情熱に基づいたプロジェクトに取り組むことができ、結果として企業に革新と進歩をもたらすことが期待されます。
+
+シリコンバレーの企業が成功する要因の一つとして、このような創造性を重視する文化が挙げられます。
+
+### 2025/02/11に起きたReactプロジェクト作成エラーを解決する記事(GitHub)
+[手作業でいくつかのコマンドを実行する](https://github.com/facebook/create-react-app/issues/13873#issuecomment-2611236376)
+
+```bash
+npx create-react-app my-app
+```
+
+```bash
+cd my-app
+```
+
+```bash
+npm install --save-dev @testing-library/react@latest
+```
+
+```bash
+npm install web-vitals
+```
+
+```bash
+npm start
+```
+
+### Reactプロジェクトの作り方について、GitHub Copilotの補足
+`create-react-app` コマンドは以前は React プロジェクトを作成するための一般的な方法でしたが、現在では `npm init` コマンドを使用する方が推奨されています。以下のコマンドを使用して最新の方法で React プロジェクトを作成できます。
+
+```bash
+npm init react-app my-app
+```
+
+または、以下のように `npx` コマンドを使用することもできます。
+
+```bash
+npx create-react-app my-app
+```
+
+もし `create-react-app` がエラーになる場合は、 `npm` や `node` のバージョンを確認し、最新のバージョンにアップデートしてみてください。また、 `create-react-app` のキャッシュをクリアすることで解決することもあります。
+
+```bash
+npx clear-npx-cache
+```
+
+`npm init react-app` コマンドが推奨されていますが、 `npx create-react-app` も現在でも使用可能です。どちらの方法でも最新の React プロジェクトを作成できます。
+
 ### Reactプロジェクトの作り方
 ---
 
@@ -15,8 +67,10 @@ Reactのプロジェクトを作成するには、以下の手順を実行しま
    ターミナルを開き、以下のコマンドを実行して新しいReactプロジェクトを作成します。
 
    ```bash
-   npx create-react-app my-react-app
+   npm init react-app my-app
    ```
+   なお次のコマンドは非推奨となっている。(npm initの方がいいらしい)
+   ~~npx create-react-app my-react-app~~
 
    `my-react-app`の部分は、プロジェクトの名前に置き換えてください。
 
@@ -217,13 +271,124 @@ export default App;
 
 これらの手順を実行することで、ブランチ保護設定により自分のプルリクエストを承認およびマージできない問題を解決できるはずです。
 
-### シリコンバレーの「25%時間」原則とは
+### Reactプロジェクト作成で依存関係エラーが出る場合の対処方法
 ---
-「25%時間」原則は、従業員が自身の通常の業務時間のうち25%を使って、創造的なプロジェクトや新しいアイデアに取り組むことを奨励するものです。特に有名なのが、Googleがこの原則を採用していることで、GmailやAdSenseなどの人気製品もこの制度から生まれました。
 
-これにより、社員は自分の興味や情熱に基づいたプロジェクトに取り組むことができ、結果として企業に革新と進歩をもたらすことが期待されます。
+依存関係がバラバラになってしまった場合、以下の手順でクリーンアップし、依存関係をすっきり解決できます。
 
-シリコンバレーの企業が成功する要因の一つとして、このような創造性を重視する文化が挙げられます。
+---
+
+### **① `node_modules` と `package-lock.json` を削除**
+まず、既存の依存関係を完全に削除します。
+
+```sh
+rm -rf node_modules package-lock.json
+```
+
+**Windows の場合（PowerShell）**
+```sh
+rd /s /q node_modules
+del package-lock.json
+```
+
+---
+
+### **② npm のキャッシュをクリア**
+キャッシュが壊れている可能性があるので、クリアします。
+
+```sh
+npm cache clean --force
+```
+
+---
+
+### **③ 適切な Node.js のバージョンを確認**
+Node.js のバージョンが古かったり、新しすぎたりすると問題が発生することがあります。推奨バージョンに変更するのも手です。
+
+現在のバージョンを確認：
+```sh
+node -v
+```
+
+Node.js を最新の LTS（推奨版）に更新（`nvm` を使っている場合）：
+```sh
+nvm install --lts
+nvm use --lts
+```
+
+`nvm` を使っていない場合は、[Node.js公式サイト](https://nodejs.org/) からLTS版をインストール。
+
+---
+
+### **④ `create-react-app` のキャッシュをクリア**
+過去にインストールした `create-react-app` のキャッシュが影響している可能性があるので、削除します。
+
+```sh
+npx clear-npx-cache
+```
+
+---
+
+### **⑤ `create-react-app` を再実行**
+クリーンな環境で再度プロジェクトを作成します。
+
+```sh
+npx create-react-app interest-ui --use-npm
+```
+
+または、依存関係の解決を緩和するオプションをつける：
+
+```sh
+npx create-react-app interest-ui --legacy-peer-deps
+```
+
+---
+
+### **補足**
+もし `create-react-app` のグローバルインストールが影響している可能性がある場合、一度アンインストールするのも手です。
+
+```sh
+npm uninstall -g create-react-app
+```
+
+そして、再度 `npx` で実行すれば、最新の `create-react-app` を取得できます。
+
+---
+
+これで、React のプロジェクトをクリーンな状態で作成できるはずです！試してみてください。💡
+
+### node関連コマンド
+---
+
+- npmのキャッシュクリア
+```sh
+npm cache clean --force
+```
+
+- npxのキャッシュクリア
+```sh
+npx clear-npx-cache
+```
+
+- インストールされているモジュールの確認
+```sh
+npm list --depth=0
+```
+
+- インストールされているグローバルモジュールの確認
+```sh
+npm list -g --depth=0
+```
+
+- グローバルモジュールの削除
+```sh
+npm uninstall -g <モジュール名>
+```
+
+- 全てのグローバルモジュールを削除
+```sh
+npm ls -g --depth=0 --parseable | grep node_modules/ | xargs npm uninstall -g
+```
 
 ---
 # 以下は最初から本資料(README.md)あった記述
